@@ -1,0 +1,48 @@
+#[derive(Debug, PartialEq, Eq, PartialOrd, Ord)]
+struct Person {
+    name: String,
+    age: u32,
+}
+
+impl Person {
+    pub fn new(name: String, age: u32) -> Self {
+        Person {
+            name,
+            age,
+        }
+    }
+}
+
+fn main() {
+    // In order to make Person sortable we need four traits
+    // Eq, PartialEq, Ord, and PartialOrd
+    let mut people = vec![
+        Person::new("Zoe".to_string(), 25),
+        Person::new("Al".to_string(), 60),
+        Person::new("John".to_string(), 1),
+    ];
+
+    // Sort people by derived natural order (Name and age)
+    people.sort();
+
+    assert_eq!(
+        people,
+        vec![
+            Person::new("Al".to_string(), 60),
+            Person::new("John".to_string(), 1),
+            Person::new("Zoe".to_string(), 25),
+        ]
+    );
+
+    // Sort people by age
+    people.sort_by(|a, b| b.age.cmp(&a.age));
+
+    assert_eq!(
+        people,
+        vec![
+            Person::new("Al".to_string(), 60),
+            Person::new("Zoe".to_string(), 25),
+            Person::new("John".to_string(), 1),
+        ]
+    );
+}
